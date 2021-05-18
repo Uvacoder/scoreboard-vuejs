@@ -1,33 +1,21 @@
 <template>
-  <body>
-    <Header :isMenuOpen="isMenuOpen" @toggleIsMenuOpen="toggleIsMenuOpen" />
+  <Header :isMenuOpen="isMenuOpen" @toggleIsMenuOpen="toggleIsMenuOpen" />
+  <main>
     <slot/>
-    <footer>
-      Enjoy
-    </footer>
-  </body>
+  </main>
+  <footer>
+    Enjoy
+  </footer>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { ref, provide } from 'vue'
 import Header from './Header.vue';
 
-export default {
-  components: { Header },
-
-  setup() {
-    const isMenuOpen = ref(false);
-    const toggleIsMenuOpen = (): void => {
-      console.log('yetp')
-      isMenuOpen.value = !isMenuOpen.value
-    }
-
-    provide('isMenuOpen', isMenuOpen)
-
-    return {
-      isMenuOpen,
-      toggleIsMenuOpen
-    }
-  }
+const isMenuOpen = ref<Boolean>(false);
+const toggleIsMenuOpen = (): void => {
+  isMenuOpen.value = !isMenuOpen.value
 }
+
+provide('isMenuOpen', isMenuOpen)
 </script>

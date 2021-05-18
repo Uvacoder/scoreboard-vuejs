@@ -2,40 +2,36 @@
   <header>
     Welcome to Vue 3 Scoreboard!
 
-    <button @click="handleToggle">Menu {{ String(isMenuOpen) }}</button>
-    <span v-if="isMenuOpen">Menu is open</span>
+    <button @click="handleToggle" :aria-pressed="String(isMenuOpen)">
+      Menu {{ String(isMenuOpen) }}
+    </button>
+
+    <Menu :isMenuOpen="isMenuOpen" />
   </header>
 </template>
 
-<script lang="ts">
-import { inject } from 'vue'
+<script lang="ts" setup>
+import Menu from './Menu.vue'
+import { inject, defineEmit } from 'vue'
 
-export default {
-  // props: {
-  //   isMenuOpen: {
-  //     type: Boolean,
-  //   }
-  // },
-  // methods: {
-  //   handleToggle() {
-  //     this.$emit('toggleMenuIsOpen')
-  //   }
-  // }
+const emit = defineEmit(['toggleIsMenuOpen'])
+const isMenuOpen = inject<Boolean>('isMenuOpen', false)
 
-  setup(props, { emit }) {
-    const isMenuOpen = inject('isMenuOpen', false)
+const handleToggle = (): void => emit('toggleIsMenuOpen')
+</script>
 
-    const handleToggle = () => {
-      console.log('here')
-      emit('toggleIsMenuOpen')
-    }
-
-    return {
-      isMenuOpen,
-      handleToggle
-    }
-  }
+<style scoped>
+header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--block);
+  background-color: var(--yellow);
+  height: calc(var(--block) * 5);
 }
 
-
-</script>
+header button {
+  color: white;
+}
+</style>
